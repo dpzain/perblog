@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dpzain.mapper.PerblogCommentsBackMapper">
+  <resultMap id="BaseResultMap" type="com.dpzain.entity.PerblogCommentsBack">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="back_id" jdbcType="VARCHAR" property="backId" />
+    <result column="back_user_id_by" jdbcType="VARCHAR" property="backUserIdBy" />
+    <result column="comments_id" jdbcType="VARCHAR" property="commentsId" />
+    <result column="back_user_id_to" jdbcType="CHAR" property="backUserIdTo" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.dpzain.entity.PerblogCommentsBack">
+    <result column="back_content" jdbcType="LONGVARCHAR" property="backContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, back_id, back_user_id_by, comments_id, back_user_id_to, create_time
+  </sql>
+  <sql id="Blob_Column_List">
+    back_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.dpzain.entity.PerblogCommentsBackExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from perblog_comments_back
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.dpzain.entity.PerblogCommentsBackExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from perblog_comments_back
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from perblog_comments_back
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from perblog_comments_back
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dpzain.entity.PerblogCommentsBackExample">
+    delete from perblog_comments_back
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dpzain.entity.PerblogCommentsBack">
+    insert into perblog_comments_back (id, back_id, back_user_id_by, 
+      comments_id, back_user_id_to, create_time, 
+      back_content)
+    values (#{id,jdbcType=BIGINT}, #{backId,jdbcType=VARCHAR}, #{backUserIdBy,jdbcType=VARCHAR}, 
+      #{commentsId,jdbcType=VARCHAR}, #{backUserIdTo,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{backContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dpzain.entity.PerblogCommentsBack">
+    insert into perblog_comments_back
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="backId != null">
+        back_id,
+      </if>
+      <if test="backUserIdBy != null">
+        back_user_id_by,
+      </if>
+      <if test="commentsId != null">
+        comments_id,
+      </if>
+      <if test="backUserIdTo != null">
+        back_user_id_to,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="backContent != null">
+        back_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="backId != null">
+        #{backId,jdbcType=VARCHAR},
+      </if>
+      <if test="backUserIdBy != null">
+        #{backUserIdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsId != null">
+        #{commentsId,jdbcType=VARCHAR},
+      </if>
+      <if test="backUserIdTo != null">
+        #{backUserIdTo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="backContent != null">
+        #{backContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dpzain.entity.PerblogCommentsBackExample" resultType="java.lang.Long">
+    select count(*) from perblog_comments_back
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update perblog_comments_back
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.backId != null">
+        back_id = #{record.backId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.backUserIdBy != null">
+        back_user_id_by = #{record.backUserIdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentsId != null">
+        comments_id = #{record.commentsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.backUserIdTo != null">
+        back_user_id_to = #{record.backUserIdTo,jdbcType=CHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.backContent != null">
+        back_content = #{record.backContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update perblog_comments_back
+    set id = #{record.id,jdbcType=BIGINT},
+      back_id = #{record.backId,jdbcType=VARCHAR},
+      back_user_id_by = #{record.backUserIdBy,jdbcType=VARCHAR},
+      comments_id = #{record.commentsId,jdbcType=VARCHAR},
+      back_user_id_to = #{record.backUserIdTo,jdbcType=CHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      back_content = #{record.backContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update perblog_comments_back
+    set id = #{record.id,jdbcType=BIGINT},
+      back_id = #{record.backId,jdbcType=VARCHAR},
+      back_user_id_by = #{record.backUserIdBy,jdbcType=VARCHAR},
+      comments_id = #{record.commentsId,jdbcType=VARCHAR},
+      back_user_id_to = #{record.backUserIdTo,jdbcType=CHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dpzain.entity.PerblogCommentsBack">
+    update perblog_comments_back
+    <set>
+      <if test="backId != null">
+        back_id = #{backId,jdbcType=VARCHAR},
+      </if>
+      <if test="backUserIdBy != null">
+        back_user_id_by = #{backUserIdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsId != null">
+        comments_id = #{commentsId,jdbcType=VARCHAR},
+      </if>
+      <if test="backUserIdTo != null">
+        back_user_id_to = #{backUserIdTo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="backContent != null">
+        back_content = #{backContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dpzain.entity.PerblogCommentsBack">
+    update perblog_comments_back
+    set back_id = #{backId,jdbcType=VARCHAR},
+      back_user_id_by = #{backUserIdBy,jdbcType=VARCHAR},
+      comments_id = #{commentsId,jdbcType=VARCHAR},
+      back_user_id_to = #{backUserIdTo,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      back_content = #{backContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dpzain.entity.PerblogCommentsBack">
+    update perblog_comments_back
+    set back_id = #{backId,jdbcType=VARCHAR},
+      back_user_id_by = #{backUserIdBy,jdbcType=VARCHAR},
+      comments_id = #{commentsId,jdbcType=VARCHAR},
+      back_user_id_to = #{backUserIdTo,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
